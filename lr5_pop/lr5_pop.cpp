@@ -4,8 +4,8 @@
 
 using namespace std;
 
-const int rows = 10000;
-const int cols = 10000;
+const int rows = 9520;
+const int cols = 3258;
 
 long long arr[rows][cols];
 
@@ -36,7 +36,7 @@ long long get_sum(int num_threads) {
 	return sum;
 }
 
-std::tuple<int, long long> get_min_sum_row(int num_threads){
+std::tuple<int, long long> get_min_sum_row(int num_threads) {
 
 	long long min = INT_MAX;
 	int min_index = -1;
@@ -77,22 +77,22 @@ int main() {
 	{
 
 #pragma omp section
-	{
-		for (int i = 1; i <= num_threads; i *= step) 
 		{
-			std::cout << "Sum in thread " << i << " = " << get_sum(i) << std::endl;
+			for (int i = 1; i <= num_threads; i *= step)
+			{
+				std::cout << "Sum in thread " << i << " = " << get_sum(i) << std::endl;
+			}
 		}
-	}
 #pragma omp section
-	{
-		for (int i = 1; i <= num_threads; i *= step)
 		{
-			tie(min_index, min) = get_min_sum_row(num_threads);
-			std::cout << "Row with min sum " << min_index << " Min sum: " << min << " in thread " << i << endl;
+			for (int i = 1; i <= num_threads; i *= step)
+			{
+				tie(min_index, min) = get_min_sum_row(num_threads);
+				std::cout << "Row with min sum " << min_index << " Min sum: " << min << " in thread " << i << endl;
+			}
 		}
 	}
-	}
-		double t2 = omp_get_wtime();
-		std::cout << "Total time - " << t2 - t1 << "sec" << std::endl;
-		return 0;
+	double t2 = omp_get_wtime();
+	std::cout << "Total time - " << t2 - t1 << "sec" << std::endl;
+	return 0;
 }

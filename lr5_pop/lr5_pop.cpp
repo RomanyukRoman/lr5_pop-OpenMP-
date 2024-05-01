@@ -87,7 +87,7 @@ int main() {
 		{
 			for (int i = 1; i <= num_threads; i *= step)
 			{
-				tie(min_index, min) = get_min_sum_row(num_threads);
+				tie(min_index, min) = get_min_sum_row(i);
 				std::cout << "Row with min sum " << min_index << " Min sum: " << min << " in thread " << i << endl;
 			}
 		}
